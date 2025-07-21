@@ -1,0 +1,870 @@
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap');
+
+/* --- Modern Global Styles & Variables --- */
+:root {
+    --primary-color: #1A3A53; /* Deep Navy Blue */
+    --accent-color: #E8A87C;  /* Terracotta */
+    --bg-color: #F8F7F4;      /* Soft Off-White */
+    --text-color: #333333;
+    --light-gray: #EAEAEA;
+    --card-bg: #FFFFFF;
+    --shadow: 0 4px 15px rgba(0, 0, 0, 0.07);
+    --transition-speed: 0.3s;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.7;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+}
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 0 2rem;
+}
+
+/* --- Animations --- */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideShow {
+    0%, 100% { background-image: url('https://source.unsplash.com/1600x900/?bromo,mist,morning'); }
+    33% { background-image: url('https://source.unsplash.com/1600x900/?raja-ampat,calm,water'); }
+    66% { background-image: url('https://source.unsplash.com/1600x900/?temple,calm,indonesia'); }
+}
+
+@keyframes zoomIn {
+    from { transform: scale(0.5); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+
+/* --- Header & Navigation --- */
+.main-header {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    padding: 1rem 0;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.main-header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.main-header .logo {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.main-nav ul {
+    display: flex;
+    list-style: none;
+}
+
+.main-nav a {
+    color: var(--text-color);
+    text-decoration: none;
+    padding: 0.5rem 1.2rem;
+    font-weight: 600;
+    transition: color var(--transition-speed);
+    position: relative;
+}
+
+.main-nav a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 1.2rem;
+    right: 1.2rem;
+    height: 3px;
+    background: var(--accent-color);
+    transform: scaleX(0);
+    transition: transform 0.3s ease-in-out;
+}
+
+.main-nav a:hover::after,
+.main-nav a.active::after {
+    transform: scaleX(1);
+}
+
+/* --- Hero Section (Halaman Utama) --- */
+.hero {
+    height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: var(--card-bg);
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    animation: slideShow 18s infinite ease-in-out;
+}
+
+.hero::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, rgba(26, 58, 83, 0.7), rgba(26, 58, 83, 0.3));
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    animation: fadeIn 1.5s ease-out;
+    max-width: 800px;
+}
+
+.hero-content h1 {
+    font-size: 4.5rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+}
+
+.hero-content p {
+    font-size: 1.5rem;
+    margin-bottom: 2.5rem;
+    font-weight: 300;
+}
+
+.cta-button {
+    background: var(--accent-color);
+    color: var(--card-bg);
+    padding: 1rem 3rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background var(--transition-speed), transform var(--transition-speed);
+    box-shadow: 0 4px 10px rgba(232, 168, 124, 0.4);
+}
+
+.cta-button:hover {
+    background: #e69a6a;
+    transform: translateY(-3px);
+}
+
+/* --- Page Content General --- */
+.page-content {
+    padding: 5rem 0;
+    animation: fadeIn 0.8s;
+}
+
+h2.page-title {
+    text-align: center;
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 4rem;
+    color: var(--primary-color);
+}
+
+/* --- Booking Form & Table --- */
+.booking-container {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 3rem;
+    align-items: start;
+}
+
+.booking-form {
+    background: var(--card-bg);
+    padding: 2.5rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    position: sticky;
+    top: 120px;
+}
+
+.booking-form h3 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 0.9rem;
+    border: none;
+    border-bottom: 2px solid var(--light-gray);
+    background-color: transparent;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    transition: border-color var(--transition-speed);
+}
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: var(--accent-color);
+}
+
+.btn {
+    display: inline-block;
+    width: 100%;
+    background: var(--primary-color);
+    color: var(--card-bg);
+    border: none;
+    padding: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: 600;
+    transition: background var(--transition-speed), transform var(--transition-speed);
+    margin-top: 1rem;
+}
+
+.btn:hover {
+    background: #11273b;
+    transform: translateY(-2px);
+}
+
+.booking-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--card-bg);
+    box-shadow: var(--shadow);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.booking-table th, .booking-table td {
+    padding: 1.2rem 1.5rem;
+    text-align: left;
+}
+
+.booking-table thead {
+    background: var(--primary-color);
+    color: var(--card-bg);
+}
+
+.booking-table tbody tr {
+    border-bottom: 1px solid var(--light-gray);
+}
+
+.booking-table tbody tr:nth-child(even) {
+    background-color: #fcfcfc;
+}
+
+.booking-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.action-btn {
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    color: white;
+    cursor: pointer;
+    margin-right: 5px;
+    font-weight: 600;
+    transition: opacity var(--transition-speed), transform var(--transition-speed);
+}
+.action-btn:hover { opacity: 0.85; transform: scale(1.05); }
+.edit-btn { background: #E8A87C; } /* Accent Color */
+.delete-btn { background: #D9534F; } /* Soft Red */
+
+/* --- Wisata Grid --- */
+.wisata-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2.5rem;
+}
+
+.wisata-card {
+    background: var(--card-bg);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+}
+
+.wisata-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.wisata-card .img-container {
+    width: 100%;
+    height: 220px;
+    overflow: hidden;
+}
+
+.wisata-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease-out;
+}
+
+.wisata-card:hover img {
+    transform: scale(1.05);
+}
+
+.wisata-info {
+    padding: 1.5rem;
+}
+
+.wisata-info h3 {
+    margin-bottom: 0.5rem;
+    color: var(--primary-color);
+    font-weight: 700;
+    font-size: 1.4rem;
+}
+.wisata-info p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+/* --- Pembayaran Section --- */
+.payment-section {
+    max-width: 600px;
+    margin: auto;
+    background: var(--card-bg);
+    padding: 3rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    text-align: center;
+}
+
+.payment-section label {
+    font-weight: 600;
+    font-size: 1.2rem;
+    color: var(--primary-color);
+}
+
+#booking-select {
+    width: 100%;
+    padding: 1rem;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    border-radius: 8px;
+    border: 1px solid var(--light-gray);
+    font-size: 1rem;
+    background-color: var(--card-bg);
+}
+
+#booking-details-display {
+    text-align: left;
+    margin-bottom: 2.5rem;
+    padding: 1.5rem;
+    background: var(--bg-color);
+    border-radius: 8px;
+    border: 1px solid var(--light-gray);
+    min-height: 100px;
+    line-height: 1.8;
+}
+
+.payment-methods button {
+    background: transparent;
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+    padding: 0.8rem 1.5rem;
+    margin: 0.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: all var(--transition-speed);
+}
+
+.payment-methods button:hover {
+    background: var(--primary-color);
+    color: var(--card-bg);
+    transform: translateY(-2px);
+}
+
+/* --- Success Animation Modal --- */
+#success-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(26, 58, 83, 0.7);
+    backdrop-filter: blur(5px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+.success-content {
+    background: white;
+    padding: 3rem 4rem;
+    border-radius: 12px;
+    text-align: center;
+    animation: zoomIn 0.5s ease-out;
+}
+
+.success-checkmark {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    display: block;
+    stroke-width: 3;
+    stroke: #4bb71b;
+    stroke-miterlimit: 10;
+    box-shadow: inset 0px 0px 0px #4bb71b;
+    animation: fill .4s ease-in-out .4s forwards;
+    margin: 0 auto 20px auto;
+}
+
+@keyframes stroke {
+  100% { stroke-dashoffset: 0; }
+}
+@keyframes fill {
+  100% { box-shadow: inset 0px 0px 0px 50px #4bb71b; }
+}
+
+.success-checkmark__circle {
+    stroke-dasharray: 166;
+    stroke-dashoffset: 166;
+    stroke-width: 3;
+    stroke-miterlimit: 10;
+    stroke: #4bb71b;
+    fill: none;
+    animation: stroke .6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+}
+
+.success-checkmark__check {
+    transform-origin: 50% 50%;
+    stroke-dasharray: 48;
+    stroke-dashoffset: 48;
+    animation: stroke .3s cubic-bezier(0.65, 0, 0.45, 1) .8s forwards;
+}
+
+.success-content h2 {
+    color: #4bb71b;
+    font-size: 2rem;
+    font-weight: 700;
+}
+/* --- User Dashboard Section --- */
+#user-dashboard {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 2.5rem;
+    align-items: start;
+}
+
+.dashboard-card {
+    background: var(--card-bg);
+    padding: 2.5rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+}
+
+.dashboard-card h3 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--light-gray);
+    padding-bottom: 1rem;
+}
+
+/* Styling untuk Kartu Saldo & Poin */
+#balance-card .balance-display {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+#balance-card .balance-amount {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--accent-color);
+    display: block;
+    line-height: 1.2;
+}
+
+#balance-card .balance-label {
+    font-size: 1rem;
+    color: #777;
+    font-weight: 600;
+}
+
+#balance-card .points-display {
+    text-align: center;
+    background-color: var(--bg-color);
+    padding: 1rem;
+    border-radius: 8px;
+}
+
+#balance-card .points-amount {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    display: block;
+}
+
+#balance-card .points-label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #555;
+}
+
+/* Styling untuk Kartu Riwayat */
+#history-list {
+    list-style: none;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+#history-list li {
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--light-gray);
+    font-size: 1rem;
+}
+#history-list li:last-child {
+    border-bottom: none;
+}
+
+#history-list .history-item-title {
+    font-weight: 600;
+    color: var(--text-color);
+}
+#history-list .history-item-date {
+    font-size: 0.9rem;
+    color: #777;
+    display: block;
+}
+
+#history-list .no-history {
+    text-align: center;
+    color: #999;
+    padding: 2rem 0;
+}
+
+/* Responsive untuk layar kecil */
+@media (max-width: 900px) {
+    #user-dashboard {
+        grid-template-columns: 1fr;
+    }
+}
+/* ... di paling bawah file css/style.css ... */
+
+/* --- Styling Dasbor Baru --- */
+#welcome-message {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+#welcome-message .page-title {
+    font-size: 2.5rem;
+}
+
+#membership-status {
+    font-size: 1.2rem;
+    color: #555;
+}
+
+.status-badge {
+    padding: 0.3rem 0.8rem;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 1rem;
+    color: white;
+}
+
+.status-classic { background-color: #777; }
+.status-silver { background-color: #c0c0c0; color: #333; }
+.status-gold { background-color: #ffd700; color: #333; }
+
+
+#user-dashboard {
+    display: grid;
+    /* Ubah grid dari 1fr 2fr menjadi 1fr 1.5fr */
+    grid-template-columns: 1fr 1.5fr; 
+    gap: 2.5rem;
+    align-items: start;
+}
+
+.dashboard-col-left, .dashboard-col-right {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+}
+
+/* Penyesuaian Kartu Saldo */
+#balance-card .balance-amount { font-size: 2.8rem; }
+#balance-card .points-amount { font-size: 2.3rem; }
+
+/* Kartu Booking Mendatang */
+#upcoming-list {
+    list-style: none;
+}
+
+.upcoming-item {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--light-gray);
+    align-items: center;
+}
+.upcoming-item:last-child { border-bottom: none; }
+
+.upcoming-item .date-box {
+    text-align: center;
+    background-color: var(--accent-color);
+    color: white;
+    padding: 0.5rem;
+    border-radius: 8px;
+    min-width: 60px;
+}
+.upcoming-item .date-box .month {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+.upcoming-item .date-box .day {
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.upcoming-item .details .room-type {
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+.upcoming-item .details .guest-info {
+    font-size: 0.9rem;
+    color: #777;
+}
+
+/* Kartu Grafik Riwayat */
+#history-chart {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+    height: 250px;
+    border-bottom: 2px solid var(--light-gray);
+    padding: 0 1rem;
+}
+
+.chart-bar-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-grow: 1;
+}
+
+.chart-bar {
+    width: 60%;
+    background-color: var(--primary-color);
+    border-radius: 5px 5px 0 0;
+    transition: height 0.5s ease-out;
+    position: relative;
+    cursor: pointer;
+}
+.chart-bar:hover .tooltip {
+    opacity: 1;
+    transform: translateY(-5px);
+}
+
+.chart-bar .tooltip {
+    position: absolute;
+    top: -35px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #333;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    opacity: 0;
+    transition: all 0.3s;
+    white-space: nowrap;
+}
+
+.chart-label {
+    margin-top: 0.5rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #777;
+}
+
+
+/* Kartu Penawaran */
+#offers-card .offer-item {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--light-gray);
+}
+#offers-card .offer-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+#offers-card .offer-item:first-child {
+    padding-top: 0;
+}
+#offers-card .offer-icon { font-size: 2rem; }
+#offers-card .offer-details h4 { font-weight: 600; font-size: 1.1rem; }
+#offers-card .offer-details p { font-size: 0.9rem; color: #777; line-height: 1.4; }
+
+
+/* Penyesuaian Responsive */
+@media (max-width: 900px) {
+    #user-dashboard {
+        grid-template-columns: 1fr;
+    }
+}
+/* GANTI BLOK :root LAMA ANDA DENGAN INI */
+:root {
+    --primary-color: #1A3A53;
+    --accent-color: #E8A87C;
+    --bg-color: #F8F7F4;
+    --card-bg: #FFFFFF;
+    --text-color: #333333;
+    --heading-color: #1A3A53;
+    --light-gray: #EAEAEA;
+    --border-color: #DDDDDD;
+    --shadow: 0 4px 15px rgba(0, 0, 0, 0.07);
+    --transition-speed: 0.3s;
+}
+
+body.dark-mode {
+    --primary-color: #58A6FF;
+    --accent-color: #E8A87C;
+    --bg-color: #0d1117;
+    --card-bg: #161b22;
+    --text-color: #c9d1d9;
+    --heading-color: #F0F6FC;
+    --light-gray: #21262d;
+    --border-color: #30363d;
+    --shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+/* ... di paling bawah file css/style.css ... */
+
+/* --- Styling Tombol Mode Gelap --- */
+.theme-toggle-btn {
+    background: none;
+    border: 2px solid var(--border-color);
+    border-radius: 50%;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    margin-left: 1rem;
+    transition: all var(--transition-speed);
+}
+.theme-toggle-btn svg {
+    stroke: var(--heading-color);
+    transition: all var(--transition-speed);
+}
+.theme-toggle-btn:hover {
+    border-color: var(--accent-color);
+    transform: rotate(15deg);
+}
+.theme-toggle-btn:hover svg {
+    stroke: var(--accent-color);
+}
+
+/* --- Styling Wishlist di Wisata Page --- */
+.wisata-card {
+    position: relative; /* Diperlukan untuk posisi absolut tombol favorit */
+}
+
+.favorite-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background-color: rgba(255, 255, 255, 0.7);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s;
+}
+.favorite-btn svg {
+    stroke: #555;
+    fill: none;
+    transition: all 0.2s;
+}
+
+.favorite-btn:hover {
+    transform: scale(1.1);
+}
+
+.favorite-btn.favorited svg {
+    stroke: #e74c3c;
+    fill: #e74c3c;
+}
+
+
+/* --- Styling Kartu Wishlist di Dasbor --- */
+#wishlist-list {
+    list-style: none;
+}
+
+.wishlist-item {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--border-color);
+}
+.wishlist-item:last-child {
+    border-bottom: none;
+}
+
+.wishlist-item img {
+    width: 80px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.wishlist-info .name {
+    font-weight: 600;
+    color: var(--heading-color);
+}
+.wishlist-info .location {
+    font-size: 0.9rem;
+    color: var(--text-color);
+}

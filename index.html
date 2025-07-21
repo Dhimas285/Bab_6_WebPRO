@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traveler Hotel - Selamat Datang</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body id="page-home">
+
+    <header class="main-header">
+        <div class="container">
+            <a href="index.html" class="logo">Traveler Hotel</a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="booking.html">Booking</a></li>
+                    <li><a href="wisata.html">Wisata</a></li>
+                    <li><a href="pembayaran.html">Pembayaran</a></li>
+                </ul>
+                <button id="theme-toggle" class="theme-toggle-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-moon"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+ <main class="page-content" id="user-dashboard-section">
+    <div class="container">
+        <div id="welcome-message">
+            <h2 class="page-title" style="margin-bottom: 0.5rem;">Selamat Datang Kembali!</h2>
+            <p id="membership-status">Anda adalah member <span class="status-badge">...</span></p>
+        </div>
+
+        <div id="user-dashboard">
+            <div class="dashboard-col-left">
+                <div class="dashboard-card" id="balance-card">
+                    <h3>Saldo & Poin</h3>
+                    <div class="balance-display">
+                        <span class="balance-amount" id="saldo-display">Memuat...</span>
+                        <span class="balance-label">Saldo Online</span>
+                    </div>
+                    <div class="points-display">
+                        <span class="points-amount" id="poin-display">0</span>
+                        <span class="points-label">Poin Perjalanan</span>
+                    </div>
+                </div>
+
+                <div class="dashboard-card" id="upcoming-card">
+                    <h3>Booking Mendatang</h3>
+                    <ul id="upcoming-list">
+                        </ul>
+                </div>
+            </div>
+
+            <div class="dashboard-col-right">
+                <div class="dashboard-card" id="history-chart-card">
+                    <h3>Aktivitas Perjalanan Anda</h3>
+                    <div id="history-chart">
+                        </div>
+                </div>
+
+                <div class="dashboard-card" id="offers-card">
+                    <h3>Penawaran Eksklusif</h3>
+                    <div class="offer-item">
+                        <span class="offer-icon">🎉</span>
+                        <div class="offer-details">
+                            <h4>Diskon 25% Kamar Suite</h4>
+                            <p>Gunakan poin Anda untuk menginap lebih mewah!</p>
+                        </div>
+                    </div>
+                    <div class="offer-item">
+                        <span class="offer-icon">☕</span>
+                        <div class="offer-details">
+                            <h4>Gratis Sarapan & Kopi</h4>
+                            <p>Khusus untuk member Silver ke atas.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+    <script src="js/script.js"></script>
+</body>
+</html>
+    

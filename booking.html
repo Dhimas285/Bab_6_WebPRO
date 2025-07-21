@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking - Traveler Hotel</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body id="page-booking">
+
+    <header class="main-header">
+        <div class="container">
+            <a href="index.html" class="logo">Traveler Hotel</a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="booking.html">Booking</a></li>
+                    <li><a href="wisata.html">Wisata</a></li>
+                    <li><a href="pembayaran.html">Pembayaran</a></li>
+                </ul>
+                <button id="theme-toggle" class="theme-toggle-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-moon"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="page-content">
+        <div class="container">
+            <h2 class="page-title">Manajemen Booking</h2>
+            <div class="booking-container">
+                <div class="booking-form">
+                    <h3>Form Pemesanan</h3>
+                    <form id="booking-form">
+                        <input type="hidden" id="booking-id">
+                        <div class="form-group">
+                            <label for="name">Nama</label>
+                            <input type="text" id="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="room-type">Tipe Kamar</label>
+                            <select id="room-type" required>
+                                <option value="Standard">Standard</option>
+                                <option value="Deluxe">Deluxe</option>
+                                <option value="Suite">Suite</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="check-in">Tanggal Check-in</label>
+                            <input type="date" id="check-in" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="check-out">Tanggal Check-out</label>
+                            <input type="date" id="check-out" required>
+                        </div>
+                         <div class="form-group">
+                            <label for="guests">Jumlah Orang</label>
+                            <input type="number" id="guests" min="1" required>
+                        </div>
+                        <button type="submit" class="btn">Simpan</button>
+                    </form>
+                </div>
+                <div class="booking-list-container">
+                    <h3>Daftar Booking</h3>
+                    <table class="booking-table">
+                        <thead>
+                            <tr>
+                                <th>Nama</th>
+                                <th>Email</th>
+                                <th>Tipe Kamar</th>
+                                <th>Check-in</th>
+                                <th>Check-out</th>
+                                <th>Orang</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="booking-list">
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <script src="js/script.js"></script>
+</body>
+</html>

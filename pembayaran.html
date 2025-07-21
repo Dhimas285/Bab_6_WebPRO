@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pembayaran - Traveler Hotel</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body id="page-pembayaran">
+
+    <header class="main-header">
+        <div class="container">
+            <a href="index.html" class="logo">Traveler Hotel</a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="booking.html">Booking</a></li>
+                    <li><a href="wisata.html">Wisata</a></li>
+                    <li><a href="pembayaran.html">Pembayaran</a></li>
+                </ul>
+                <button id="theme-toggle" class="theme-toggle-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-moon"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="page-content">
+        <div class="container">
+            <h2 class="page-title">Simulasi Pembayaran</h2>
+            <div class="payment-section">
+                <label for="booking-select">Pilih Booking yang Ingin Dibayar:</label>
+                <select id="booking-select">
+                    </select>
+
+                <h3>Detail Booking</h3>
+                <div id="booking-details-display">
+                    <p>Pilih data booking untuk melihat detail.</p>
+                </div>
+                
+                <h3>Pilih Metode Pembayaran</h3>
+                <div class="payment-methods">
+                    <button>E-Wallet</button>
+                    <button>Transfer Bank</button>
+                    <button>Kartu Kredit</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="success-modal">
+        <div class="success-content">
+            <svg class="success-checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                <circle class="success-checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
+                <path class="success-checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+            </svg>
+            <h2>Pembayaran Berhasil!</h2>
+        </div>
+    </div>
+    
+    <script src="js/script.js"></script>
+</body>
+</html>
