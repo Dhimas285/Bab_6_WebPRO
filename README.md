@@ -2,7 +2,7 @@
  
 Tugas Website Kelompok BAB 6
 PRAKTIKUM WEB PROGRAMMING
-- Nabiiel Ilyasa Pradana
-- Fauzan Habib Asiidiq
+- Nabiel Ilyasa Pradana
+- Fauzan Habib Assidiq
 - Alfi Hidayat
 - Dhimas Priscila Ramadhan
