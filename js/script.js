@@ -3,6 +3,30 @@ document.addEventListener('DOMContentLoaded', () => {
     // BAGIAN GLOBAL & INISIALISASI
     // ==================================
 
+    // --- Fungsi Notifikasi (Improvisasi) ---
+    const showNotification = (message, type = 'info') => {
+        const container = document.getElementById('notification-container');
+        if (!container) {
+            console.error('Notification container not found!');
+            return;
+        }
+
+        const notification = document.createElement('div');
+        notification.className = `notification ${type}`;
+        let icon = '';
+        if (type === 'success') icon = '✔️';
+        else if (type === 'error') icon = '❌';
+        else icon = 'ℹ️';
+
+        notification.innerHTML = `<span class="notification-icon">${icon}</span><span>${message}</span>`;
+        container.appendChild(notification);
+
+        setTimeout(() => {
+            notification.remove();
+        }, 3000); // Notifikasi akan hilang setelah 3 detik
+    };
+
+
     // --- Logika Mode Gelap (Global) ---
     const themeToggle = document.getElementById('theme-toggle');
     if (themeToggle) {
@@ -22,9 +46,11 @@ document.addEventListener('DOMContentLoaded', () => {
             if (document.body.classList.contains('dark-mode')) {
                 localStorage.setItem('theme', 'dark');
                 themeToggle.innerHTML = sunIcon;
+                showNotification('Mode Gelap Diaktifkan', 'info');
             } else {
                 localStorage.setItem('theme', 'light');
                 themeToggle.innerHTML = moonIcon;
+                showNotification('Mode Terang Diaktifkan', 'info');
             }
         });
     }
@@ -33,7 +59,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const page = document.body.id;
     const navLinks = document.querySelectorAll('.main-nav a');
     navLinks.forEach(link => {
-        if (link.href.includes(`${page}.html`)) {
+        // Improvisasi: Menggunakan includes untuk fleksibilitas URL
+        if (link.href.includes(page + '.html')) {
             link.classList.add('active');
         }
     });
@@ -87,11 +114,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const bookings = JSON.parse(localStorage.getItem('bookings')) || [];
         const today = new Date();
+        // Set time to 00:00:00 for accurate date comparison
+        today.setHours(0, 0, 0, 0);
+
         const completedTrips = bookings.filter(b => new Date(b.checkOut) < today);
         const upcomingTrips = bookings.filter(b => new Date(b.checkIn) >= today);
 
         const totalCompleted = completedTrips.length;
-        userProfile.poin = 150;
+        userProfile.poin = 150; // This seems like a fixed value, consider making it dynamic based on trips
         let status = 'Classic'; let statusClass = 'status-classic';
         if (totalCompleted >= 10) { status = 'Gold'; statusClass = 'status-gold'; }
         else if (totalCompleted >= 5) { status = 'Silver'; statusClass = 'status-silver'; }
@@ -157,6 +187,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const bookingForm = document.getElementById('booking-form');
         const bookingList = document.getElementById('booking-list');
         const bookingIdField = document.getElementById('booking-id');
+        const checkInField = document.getElementById('check-in');
+        const checkOutField = document.getElementById('check-out');
 
         const getBookings = () => JSON.parse(localStorage.getItem('bookings')) || [];
         const saveBookings = (bookings) => localStorage.setItem('bookings', JSON.stringify(bookings));
@@ -165,38 +197,89 @@ document.addEventListener('DOMContentLoaded', () => {
             bookingList.innerHTML = '';
             const bookings = getBookings();
             if (bookings.length === 0) {
-                bookingList.innerHTML = '<tr><td colspan="7" style="text-align:center;">Belum ada data booking.</td></tr>';
+                bookingList.innerHTML = '<tr><td colspan="7" style="text-align:center; color:#999; padding:2rem 0;">Belum ada data booking. Mulai perjalanan Anda dengan menambahkan booking baru!</td></tr>';
                 return;
             }
             bookings.forEach(booking => {
                 const row = document.createElement('tr');
-                row.innerHTML = `<td>${booking.name}</td><td>${booking.email}</td><td>${booking.roomType}</td><td>${booking.checkIn}</td><td>${booking.checkOut}</td><td>${booking.guests}</td><td><button class="action-btn edit-btn" data-id="${booking.id}">Edit</button><button class="action-btn delete-btn" data-id="${booking.id}">Hapus</button></td>`;
+                row.innerHTML = `
+                    <td>${booking.name}</td>
+                    <td>${booking.email}</td>
+                    <td>${booking.roomType}</td>
+                    <td>${booking.checkIn}</td>
+                    <td>${booking.checkOut}</td>
+                    <td>${booking.guests}</td>
+                    <td>
+                        <button class="action-btn edit-btn" data-id="${booking.id}">Edit</button>
+                        <button class="action-btn delete-btn" data-id="${booking.id}">Hapus</button>
+                    </td>
+                `;
                 bookingList.appendChild(row);
             });
         };
 
+        // Improvisasi: Validasi tanggal check-out setelah check-in
+        const validateDates = () => {
+            const checkInDate = new Date(checkInField.value);
+            const checkOutDate = new Date(checkOutField.value);
+
+            // Set min date for check-in to today
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            checkInField.min = today.toISOString().split('T')[0];
+
+            if (checkOutDate < checkInDate) {
+                checkOutField.setCustomValidity('Tanggal Check-out harus setelah Tanggal Check-in.');
+            } else {
+                checkOutField.setCustomValidity(''); // Reset pesan kesalahan
+            }
+            // Set min date for check-out to check-in date
+            checkOutField.min = checkInField.value;
+        };
+
+        checkInField.addEventListener('change', validateDates);
+        checkOutField.addEventListener('change', validateDates);
+        // Initial validation call in case dates are pre-filled (e.g., on edit)
+        validateDates();
+
+
         bookingForm.addEventListener('submit', (e) => {
             e.preventDefault();
+
+            // Panggil validasi tanggal sebelum submit
+            validateDates();
+            if (!bookingForm.checkValidity()) { // Memeriksa validitas form HTML5 (termasuk custom validity)
+                bookingForm.reportValidity(); // Menampilkan pesan kesalahan bawaan browser
+                showNotification('Harap perbaiki kesalahan pada formulir.', 'error');
+                return;
+            }
+
             const id = bookingIdField.value;
             const newBooking = {
                 name: document.getElementById('name').value,
                 email: document.getElementById('email').value,
                 roomType: document.getElementById('room-type').value,
-                checkIn: document.getElementById('check-in').value,
-                checkOut: document.getElementById('check-out').value,
+                checkIn: checkInField.value,
+                checkOut: checkOutField.value,
                 guests: document.getElementById('guests').value
             };
             let bookings = getBookings();
             if (id) {
                 bookings = bookings.map(b => b.id == id ? { ...newBooking, id: parseInt(id) } : b);
+                showNotification('Booking berhasil diperbarui!', 'success');
             } else {
                 newBooking.id = Date.now();
                 bookings.push(newBooking);
+                showNotification('Booking berhasil ditambahkan!', 'success');
             }
             saveBookings(bookings);
             renderTable();
             bookingForm.reset();
             bookingIdField.value = '';
+            // Improvisasi: Reset custom validity setelah submit berhasil
+            checkInField.setCustomValidity('');
+            checkOutField.setCustomValidity('');
+            validateDates(); // Re-validate to set min dates correctly for new entry
         });
 
         bookingList.addEventListener('click', (e) => {
@@ -209,9 +292,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     document.getElementById('name').value = bookingToEdit.name;
                     document.getElementById('email').value = bookingToEdit.email;
                     document.getElementById('room-type').value = bookingToEdit.roomType;
-                    document.getElementById('check-in').value = bookingToET.checkIn;
-                    document.getElementById('check-out').value = bookingToEdit.checkOut;
+                    checkInField.value = bookingToEdit.checkIn;
+                    checkOutField.value = bookingToEdit.checkOut;
                     document.getElementById('guests').value = bookingToEdit.guests;
+                    validateDates(); // Panggil validasi saat mengisi form edit
+                    showNotification('Data booking dimuat untuk diedit.', 'info');
                 }
             }
             if (e.target.classList.contains('delete-btn')) {
@@ -220,6 +305,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const updatedBookings = bookings.filter(b => b.id != id);
                     saveBookings(updatedBookings);
                     renderTable();
+                    showNotification('Booking berhasil dihapus.', 'success');
                 }
             }
         });
@@ -248,9 +334,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (currentFavorites.includes(wisataName)) {
                     currentFavorites = currentFavorites.filter(name => name !== wisataName);
                     favButton.classList.remove('favorited');
+                    showNotification(`${wisataName} dihapus dari wishlist.`, 'info');
                 } else {
                     currentFavorites.push(wisataName);
                     favButton.classList.add('favorited');
+                    showNotification(`${wisataName} ditambahkan ke wishlist!`, 'success');
                 }
                 localStorage.setItem('userFavorites', JSON.stringify(currentFavorites));
             }
@@ -265,9 +353,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const successModal = document.getElementById('success-modal');
 
         const bookings = JSON.parse(localStorage.getItem('bookings')) || [];
-        const activeBookings = bookings.filter(b => new Date(b.checkIn) >= new Date());
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const activeBookings = bookings.filter(b => new Date(b.checkIn) >= today);
 
         if (activeBookings.length > 0) {
+            bookingSelect.innerHTML = '<option value="">-- Pilih Booking --</option>'; // Add default option
             activeBookings.forEach(booking => {
                 const option = document.createElement('option');
                 option.value = booking.id;
@@ -275,10 +366,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 bookingSelect.appendChild(option);
             });
         } else {
-            const option = document.createElement('option');
-            option.textContent = 'Tidak ada booking aktif yang tersedia';
-            option.disabled = true;
-            bookingSelect.appendChild(option);
+            bookingSelect.innerHTML = '<option value="">Tidak ada booking aktif yang tersedia</option>';
+            bookingSelect.disabled = true;
+            paymentButtons.forEach(btn => btn.disabled = true); // Disable payment buttons
         }
 
         const displayBookingDetails = () => {
@@ -294,20 +384,28 @@ document.addEventListener('DOMContentLoaded', () => {
         bookingSelect.addEventListener('change', displayBookingDetails);
         paymentButtons.forEach(button => {
             button.addEventListener('click', () => {
-                if (!bookingSelect.value || activeBookings.length === 0) {
-                    alert('Silakan pilih data booking aktif terlebih dahulu!');
+                if (!bookingSelect.value) { // Check if a booking is actually selected
+                    showNotification('Silakan pilih data booking aktif terlebih dahulu!', 'error');
                     return;
                 }
                 successModal.style.display = 'flex';
+                showNotification('Pembayaran sedang diproses...', 'info');
+
                 setTimeout(() => {
                     successModal.style.display = 'none';
                     const remainingBookings = bookings.filter(b => b.id != bookingSelect.value);
                     localStorage.setItem('bookings', JSON.stringify(remainingBookings));
-                    window.location.reload();
+                    showNotification('Pembayaran berhasil! Booking Anda telah diselesaikan.', 'success');
+                    // Update user profile points (example)
+                    let userProfile = JSON.parse(localStorage.getItem('userProfile')) || { saldo: 0, poin: 0 };
+                    userProfile.poin += 10; // Add 10 points for each successful payment
+                    localStorage.setItem('userProfile', JSON.stringify(userProfile));
+
+                    window.location.reload(); // Reload to update booking list and dashboard
                 }, 3000);
             });
         });
 
-        displayBookingDetails();
+        displayBookingDetails(); // Initial call to display details if a booking is pre-selected
     }
 });
