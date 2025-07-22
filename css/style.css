@@ -11,6 +11,22 @@
     --card-bg: #FFFFFF;
     --shadow: 0 4px 15px rgba(0, 0, 0, 0.07);
     --transition-speed: 0.3s;
+    --success-color: #4CAF50; /* Green for success */
+    --error-color: #F44336;   /* Red for error */
+}
+
+body.dark-mode {
+    --primary-color: #58A6FF;
+    --accent-color: #E8A87C;
+    --bg-color: #0d1117;
+    --card-bg: #161b22;
+    --text-color: #c9d1d9;
+    --heading-color: #F0F6FC;
+    --light-gray: #21262d;
+    --border-color: #30363d;
+    --shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    --success-color: #66BB6A;
+    --error-color: #EF5350;
 }
 
 * {
@@ -62,6 +78,12 @@ body {
     top: 0;
     z-index: 1000;
 }
+
+body.dark-mode .main-header {
+    background: rgba(22, 27, 34, 0.8); /* Darker background for dark mode header */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
 
 .main-header .container {
     display: flex;
@@ -217,6 +239,7 @@ h2.page-title {
     margin-bottom: 0.5rem;
     font-weight: 600;
     font-size: 0.9rem;
+    color: var(--text-color); /* Ensure label color adapts to dark mode */
 }
 
 .form-group input,
@@ -229,6 +252,7 @@ h2.page-title {
     font-family: 'Poppins', sans-serif;
     font-size: 1rem;
     transition: border-color var(--transition-speed);
+    color: var(--text-color); /* Ensure input text color adapts to dark mode */
 }
 .form-group input:focus,
 .form-group select:focus {
@@ -248,13 +272,23 @@ h2.page-title {
     font-size: 1.1rem;
     font-weight: 600;
     transition: background var(--transition-speed), transform var(--transition-speed);
-    margin-top: 1rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Added shadow for buttons */
 }
 
 .btn:hover {
     background: #11273b;
     transform: translateY(-2px);
 }
+
+body.dark-mode .btn {
+    background: var(--primary-color); /* Use primary color for dark mode buttons */
+    color: var(--card-bg);
+}
+
+body.dark-mode .btn:hover {
+    background: #4a90e2; /* Slightly lighter hover for dark mode */
+}
+
 
 .booking-table {
     width: 100%;
@@ -268,6 +302,7 @@ h2.page-title {
 .booking-table th, .booking-table td {
     padding: 1.2rem 1.5rem;
     text-align: left;
+    color: var(--text-color); /* Ensure table text color adapts */
 }
 
 .booking-table thead {
@@ -280,7 +315,7 @@ h2.page-title {
 }
 
 .booking-table tbody tr:nth-child(even) {
-    background-color: #fcfcfc;
+    background-color: var(--bg-color); /* Use bg-color for even rows */
 }
 
 .booking-table tbody tr:last-child {
@@ -298,8 +333,8 @@ h2.page-title {
     transition: opacity var(--transition-speed), transform var(--transition-speed);
 }
 .action-btn:hover { opacity: 0.85; transform: scale(1.05); }
-.edit-btn { background: #E8A87C; } /* Accent Color */
-.delete-btn { background: #D9534F; } /* Soft Red */
+.edit-btn { background: var(--accent-color); } /* Accent Color */
+.delete-btn { background: var(--error-color); } /* Soft Red */
 
 /* --- Wisata Grid --- */
 .wisata-grid {
@@ -351,6 +386,7 @@ h2.page-title {
 .wisata-info p {
     font-size: 0.95rem;
     line-height: 1.6;
+    color: var(--text-color);
 }
 
 /* --- Pembayaran Section --- */
@@ -379,6 +415,7 @@ h2.page-title {
     border: 1px solid var(--light-gray);
     font-size: 1rem;
     background-color: var(--card-bg);
+    color: var(--text-color);
 }
 
 #booking-details-display {
@@ -390,6 +427,7 @@ h2.page-title {
     border: 1px solid var(--light-gray);
     min-height: 100px;
     line-height: 1.8;
+    color: var(--text-color);
 }
 
 .payment-methods button {
@@ -427,11 +465,12 @@ h2.page-title {
 }
 
 .success-content {
-    background: white;
+    background: var(--card-bg); /* Adapt to dark mode */
     padding: 3rem 4rem;
     border-radius: 12px;
     text-align: center;
     animation: zoomIn 0.5s ease-out;
+    color: var(--text-color);
 }
 
 .success-checkmark {
@@ -440,9 +479,9 @@ h2.page-title {
     border-radius: 50%;
     display: block;
     stroke-width: 3;
-    stroke: #4bb71b;
+    stroke: var(--success-color);
     stroke-miterlimit: 10;
-    box-shadow: inset 0px 0px 0px #4bb71b;
+    box-shadow: inset 0px 0px 0px var(--success-color);
     animation: fill .4s ease-in-out .4s forwards;
     margin: 0 auto 20px auto;
 }
@@ -451,7 +490,7 @@ h2.page-title {
   100% { stroke-dashoffset: 0; }
 }
 @keyframes fill {
-  100% { box-shadow: inset 0px 0px 0px 50px #4bb71b; }
+  100% { box-shadow: inset 0px 0px 0px 50px var(--success-color); }
 }
 
 .success-checkmark__circle {
@@ -459,7 +498,7 @@ h2.page-title {
     stroke-dashoffset: 166;
     stroke-width: 3;
     stroke-miterlimit: 10;
-    stroke: #4bb71b;
+    stroke: var(--success-color);
     fill: none;
     animation: stroke .6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
 }
@@ -472,7 +511,7 @@ h2.page-title {
 }
 
 .success-content h2 {
-    color: #4bb71b;
+    color: var(--success-color);
     font-size: 2rem;
     font-weight: 700;
 }
@@ -611,7 +650,7 @@ h2.page-title {
 #user-dashboard {
     display: grid;
     /* Ubah grid dari 1fr 2fr menjadi 1fr 1.5fr */
-    grid-template-columns: 1fr 1.5fr; 
+    grid-template-columns: 1fr 1.5fr;
     gap: 2.5rem;
     align-items: start;
 }
@@ -759,6 +798,8 @@ h2.page-title {
     --border-color: #DDDDDD;
     --shadow: 0 4px 15px rgba(0, 0, 0, 0.07);
     --transition-speed: 0.3s;
+    --success-color: #4CAF50; /* Green for success */
+    --error-color: #F44336;   /* Red for error */
 }
 
 body.dark-mode {
@@ -771,6 +812,8 @@ body.dark-mode {
     --light-gray: #21262d;
     --border-color: #30363d;
     --shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    --success-color: #66BB6A;
+    --error-color: #EF5350;
 }
 /* ... di paling bawah file css/style.css ... */
 
@@ -820,12 +863,21 @@ body.dark-mode {
     align-items: center;
     justify-content: center;
     transition: transform 0.2s;
+    z-index: 10; /* Ensure it's above the image */
 }
+body.dark-mode .favorite-btn {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
 .favorite-btn svg {
     stroke: #555;
     fill: none;
     transition: all 0.2s;
 }
+body.dark-mode .favorite-btn svg {
+    stroke: #bbb;
+}
+
 
 .favorite-btn:hover {
     transform: scale(1.1);
@@ -867,4 +919,78 @@ body.dark-mode {
 .wishlist-info .location {
     font-size: 0.9rem;
     color: var(--text-color);
+}
+
+/* --- Notifikasi (Toast) --- */
+#notification-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 2001; /* Above modals */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.notification {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    padding: 15px 20px;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    opacity: 0;
+    transform: translateX(100%);
+    animation: slideIn 0.5s forwards, fadeOut 0.5s 2.5s forwards;
+    min-width: 250px;
+    max-width: 350px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.notification.success {
+    border-left: 5px solid var(--success-color);
+}
+
+.notification.error {
+    border-left: 5px solid var(--error-color);
+}
+
+.notification.info {
+    border-left: 5px solid var(--primary-color);
+}
+
+.notification-icon {
+    font-size: 1.5rem;
+    line-height: 1;
+}
+
+@keyframes slideIn {
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeOut {
+    to { opacity: 0; transform: translateX(100%); }
+}
+
+/* Responsive adjustments for notifications */
+@media (max-width: 600px) {
+    #notification-container {
+        top: auto;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: calc(100% - 40px);
+        right: auto;
+    }
+    .notification {
+        width: 100%;
+        animation: slideInBottom 0.5s forwards, fadeOutBottom 0.5s 2.5s forwards;
+    }
+    @keyframes slideInBottom {
+        to { opacity: 1; transform: translateX(-50%); }
+    }
+    @keyframes fadeOutBottom {
+        to { opacity: 0; transform: translateX(-50%) translateY(100%); }
+    }
 }
